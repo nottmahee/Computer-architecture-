@@ -1,1 +1,49 @@
-aahhhj
+
+def to_binary(n):
+    return format(n & 0xFF, '08b')
+
+
+def signed_value(n):
+    if n & 0x80:
+        return n - 256
+    return n
+
+
+def binary_addition(a, b):
+    a_bin = to_binary(a)
+    b_bin = to_binary(b)
+
+    result = (a + b) & 0xFF
+    result_bin = to_binary(result)
+    decimal_result = signed_value(result)
+
+    overflow = ((a >= 0 and b >= 0 and decimal_result < 0) or
+                (a < 0 and b < 0 and decimal_result >= 0))
+
+    print("Operand 1:", a, "=", a_bin)
+    print("Operand 2:", b, "=", b_bin)
+    print("Binary Addition:")
+    print(" ", a_bin)
+    print("+", b_bin)
+    print("-----------")
+    print(" ", result_bin)
+
+    print("Result in Binary:", result_bin)
+
+    if overflow:
+        print("Result in Decimal: Overflow")
+        print("8-bit signed result:", decimal_result)
+        print("Arithmetic Overflow: Yes")
+    else:
+        print("Result in Decimal:", decimal_result)
+        print("Arithmetic Overflow: No")
+
+    print()
+
+
+print("Expression (a): 120 + (+62)")
+binary_addition(120, 62)
+
+print("Expression (b): (-120) + (-62)")
+binary_addition(-120, -62)
+
